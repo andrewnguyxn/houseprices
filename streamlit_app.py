@@ -126,8 +126,8 @@ mse = mean_squared_error(y, y_pred)
 # Calculate R-squared
 r2 = r2_score(y, y_pred)
 
-print(f'Mean Squared Error: {mse}')
-print(f'R-squared: {r2}')
+st.write(f'Mean Squared Error: {mse}')
+st.write(f'R-squared: {r2}')
 
 
 
