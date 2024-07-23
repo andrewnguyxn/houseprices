@@ -119,10 +119,12 @@ st.write(x)
 
 model.fit(x,y)
 
-mse = mean_squared_error(y_test, y_pred)
+y_pred = model.predict(x)
+
+mse = mean_squared_error(y, y_pred)
 
 # Calculate R-squared
-r2 = r2_score(y_test, y_pred)
+r2 = r2_score(y, y_pred)
 
 print(f'Mean Squared Error: {mse}')
 print(f'R-squared: {r2}')
