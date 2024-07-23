@@ -132,7 +132,7 @@ household = st.number_input('Number Of Households', min_value=0)
 income = st.number_input('Median Income', min_value=0)
 
 if st.button('Predict'):
-    input_data = pd.DataFrame({'total_rooms': [total_rooms], 'total_bedrooms': [bed],'population' : [pop], 'households' : [household, 'median_income': [income]})
+    input_data = pd.DataFrame({'total_rooms': [total_rooms], 'total_bedrooms': [bed],'population' : [pop], 'households' : [household], 'median_income': [income]})
     prediction = model.predict(input_data)
     st.subheader(f'Predicted Median House Value: ${prediction[0]:,.2f}')
 
