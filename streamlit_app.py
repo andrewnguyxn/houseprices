@@ -119,24 +119,24 @@ view_state = pdk.ViewState(
 r = pdk.Deck(layers=[layer], initial_view_state=view_state)
 st.pydeck_chart(r)
 
-x = train[['SRoom', 'SBed', 'SPop', 'SHouse', 'LIncome']]
-y = train['SValue']
+x = train[['total_rooms', 'total_bedrooms', 'population', 'households', 'median_income']]
+y = train['median_house_value']
 
 model = LinearRegression()
 
-st.write(x)
+st.header('Enter the details for a property price estimate:')
+total_rooms = st.number_input('Total Rooms In Area', min_value=0)
+bed = st.number_input('Total Bedrooms', min_value=0)
+pop = st.number_input('Area Population', min_value=0)
+household = st.number_input('Number Of Households', min_value=0)
+income = st.number_input('Median Income', min_value=0)
 
-model.fit(x,y)
+if st.button('Predict'):
+    input_data = pd.DataFrame({'total_rooms': [total_rooms], 'total_bedrooms': [bed],'population' : [pop], 'households' : [household, 'median_income': [income]})
+    prediction = model.predict(input_data)
+    st.subheader(f'Predicted Median House Value: ${prediction[0]:,.2f}')
 
-y_pred = model.predict(x)
 
-mse = mean_squared_error(y, y_pred)
-
-# Calculate R-squared
-r2 = r2_score(y, y_pred)
-
-st.write(f'Mean Squared Error: {mse}')
-st.write(f'R-squared: {r2}')
 
 
 
