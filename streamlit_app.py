@@ -82,8 +82,17 @@ df['color'] = df['median_house_value'].apply(lambda x: colormap(norm(x)))
 # Convert RGBA colors to a format compatible with pydeck
 df['color'] = df['color'].apply(lambda rgba: [int(255 * c) for c in rgba[:3]])
 
+price_range = st.slider(
+    'Select a price range',
+    min_value=int(df['median_house_value'].min()),
+    max_value=int(df['median_house_value'].max()),
+    value=(int(df['median_house_value'].min()), int(df['median_house_value'].max()))
+)
+
+filtered_data = df[(df['median_house_value'] >= price_range[0]) & (df['median_house_value'] <= price_range[1])]
+
 # Select longitude, latitude, and color columns
-lon_lat_df = df[['longitude', 'latitude', 'color']]
+lon_lat_df = filtered_data[['longitude', 'latitude', 'color']]
 
 # Title of the app
 st.title('Heatmap Visualization Of Housing Prices')
@@ -109,18 +118,6 @@ view_state = pdk.ViewState(
 # Render the deck.gl map
 r = pdk.Deck(layers=[layer], initial_view_state=view_state)
 st.pydeck_chart(r)
-
-price_range = st.slider(
-    'Select a price range',
-    min_value=int(df['median_house_value'].min()),
-    max_value=int(df['median_house_value'].max()),
-    value=(int(df['median_house_value'].min()), int(df['median_house_value'].max()))
-)
-
-filtered_data = df[(df['median_house_value'] >= price_range[0]) & (df['price'] <= price_range[1])]
-
-st.write('Filtered Data:')
-st.write(filtered_data)
 
 x = train[['SRoom', 'SBed', 'SPop', 'SHouse', 'LIncome']]
 y = train['SValue']
