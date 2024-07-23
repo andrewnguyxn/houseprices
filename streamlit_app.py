@@ -77,10 +77,10 @@ norm = mcolors.Normalize(vmin=df['median_house_value'].min(), vmax=df['median_ho
 
 # Apply a colormap (e.g., 'plasma') to the normalized data to get colors
 colormap = cm.get_cmap('plasma')
-train['color'] = train['median_house_value'].apply(lambda x: colormap(norm(x)))
+df['color'] = df['median_house_value'].apply(lambda x: colormap(norm(x)))
 
 # Convert RGBA colors to a format compatible with pydeck
-train['color'] = train['color'].apply(lambda rgba: [int(255 * c) for c in rgba[:3]])
+df['color'] = df['color'].apply(lambda rgba: [int(255 * c) for c in rgba[:3]])
 
 # Select longitude, latitude, and color columns
 lon_lat_df = train[['longitude', 'latitude', 'color']]
