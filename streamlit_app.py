@@ -2,11 +2,20 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import pydeck as pdk
+import numpy as np
 import matplotlib.cm as cm
 import matplotlib.colors as mcolors
 from sklearn.linear_model import LinearRegression
 
 df = pd.read_csv("housing.csv")
+
+#Transform variables to reduce skewedness
+df['SRoom'] = np.sqrt(df['total_rooms'])
+df['SBed'] = np.sqrt(df['total_bedrooms'])
+df['SPop'] = np.sqrt(df['population'])
+df['SHouse'] = np.sqrt(df['households'])
+df['LIncome'] = np.log(df['median_income'])
+df['SValue'] = np.sqrt(df['median_house_value'])
 
 df_sample = df.sample(n=2000, random_state=42)
 
@@ -65,13 +74,13 @@ norm = mcolors.Normalize(vmin=df['median_house_value'].min(), vmax=df['median_ho
 
 # Apply a colormap (e.g., 'plasma') to the normalized data to get colors
 colormap = cm.get_cmap('plasma')
-df['color'] = df['median_house_value'].apply(lambda x: colormap(norm(x)))
+train['color'] = train['median_house_value'].apply(lambda x: colormap(norm(x)))
 
 # Convert RGBA colors to a format compatible with pydeck
-df['color'] = df['color'].apply(lambda rgba: [int(255 * c) for c in rgba[:3]])
+train['color'] = train['color'].apply(lambda rgba: [int(255 * c) for c in rgba[:3]])
 
 # Select longitude, latitude, and color columns
-lon_lat_df = df[['longitude', 'latitude', 'color']]
+lon_lat_df = train[['longitude', 'latitude', 'color']]
 
 # Title of the app
 st.title('Heatmap Visualization Of Housing Prices')
@@ -97,5 +106,21 @@ view_state = pdk.ViewState(
 # Render the deck.gl map
 r = pdk.Deck(layers=[layer], initial_view_state=view_state)
 st.pydeck_chart(r)
+
+x = train['SRoom', 'SBed', 'SPop', 'SHouse', 'LIncome']
+y = train['SValue']
+
+model = LinearRegression()
+
+model.fit(x,y)
+
+mse = mean_squared_error(y_test, y_pred)
+
+# Calculate R-squared
+r2 = r2_score(y_test, y_pred)
+
+print(f'Mean Squared Error: {mse}')
+print(f'R-squared: {r2}')
+
 
 
