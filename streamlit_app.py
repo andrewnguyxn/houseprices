@@ -112,9 +112,9 @@ st.pydeck_chart(r)
 
 price_range = st.slider(
     'Select a price range',
-    min_value=int(df['price'].min()),
-    max_value=int(df['price'].max()),
-    value=(int(df['price'].min()), int(df['price'].max()))
+    min_value=int(df['median_house_value'].min()),
+    max_value=int(df['median_house_value'].max()),
+    value=(int(df['median_house_value'].min()), int(df['median_house_value'].max()))
 )
 
 filtered_data = df[(df['median_house_value'] >= price_range[0]) & (df['price'] <= price_range[1])]
