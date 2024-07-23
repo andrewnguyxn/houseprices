@@ -9,6 +9,8 @@ from sklearn.linear_model import LinearRegression
 
 df = pd.read_csv("housing.csv")
 
+df = df.dropna()
+
 #Transform variables to reduce skewedness
 df['SRoom'] = np.sqrt(df['total_rooms'])
 df['SBed'] = np.sqrt(df['total_bedrooms'])
