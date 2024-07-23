@@ -110,6 +110,18 @@ view_state = pdk.ViewState(
 r = pdk.Deck(layers=[layer], initial_view_state=view_state)
 st.pydeck_chart(r)
 
+price_range = st.slider(
+    'Select a price range',
+    min_value=int(df['price'].min()),
+    max_value=int(df['price'].max()),
+    value=(int(df['price'].min()), int(df['price'].max()))
+)
+
+filtered_data = df[(df['median_house_value'] >= price_range[0]) & (df['price'] <= price_range[1])]
+
+st.write('Filtered Data:')
+st.write(filtered_data)
+
 x = train[['SRoom', 'SBed', 'SPop', 'SHouse', 'LIncome']]
 y = train['SValue']
 
