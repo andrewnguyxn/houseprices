@@ -124,6 +124,8 @@ y = train['median_house_value']
 
 model = LinearRegression()
 
+model.fit(x,y)
+
 st.header('Enter the details for a property price estimate:')
 total_rooms = st.number_input('Total Rooms In Area', min_value=0)
 bed = st.number_input('Total Bedrooms', min_value=0)
