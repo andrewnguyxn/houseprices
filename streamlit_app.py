@@ -112,6 +112,8 @@ y = train['SValue']
 
 model = LinearRegression()
 
+st.write(x)
+
 model.fit(x,y)
 
 mse = mean_squared_error(y_test, y_pred)
