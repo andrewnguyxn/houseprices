@@ -107,7 +107,7 @@ view_state = pdk.ViewState(
 r = pdk.Deck(layers=[layer], initial_view_state=view_state)
 st.pydeck_chart(r)
 
-x = train['SRoom', 'SBed', 'SPop', 'SHouse', 'LIncome']
+x = train[['SRoom', 'SBed', 'SPop', 'SHouse', 'LIncome']]
 y = train['SValue']
 
 model = LinearRegression()
