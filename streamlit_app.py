@@ -83,7 +83,7 @@ df['color'] = df['median_house_value'].apply(lambda x: colormap(norm(x)))
 df['color'] = df['color'].apply(lambda rgba: [int(255 * c) for c in rgba[:3]])
 
 # Select longitude, latitude, and color columns
-lon_lat_df = train[['longitude', 'latitude', 'color']]
+lon_lat_df = df[['longitude', 'latitude', 'color']]
 
 # Title of the app
 st.title('Heatmap Visualization Of Housing Prices')
